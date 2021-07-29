@@ -5,7 +5,7 @@ import static java.lang.Math.*;
 /**
  * The same as solution 2, but a different angle computation formula.
  */
-public enum Solution3 implements RegularPolygon.Builder {
+enum Solution3 implements RegularPolygon.Builder {
 	INSTANCE;
 
 	/**

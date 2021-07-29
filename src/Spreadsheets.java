@@ -1,9 +1,9 @@
 /* Task 1B. Spreadsheets */
 
-import java.util.Scanner;
 import java.util.InputMismatchException;
-import java.util.regex.Pattern;
+import java.util.Scanner;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * The task solution.

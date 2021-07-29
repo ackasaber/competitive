@@ -1,6 +1,9 @@
 /* Task 1C. Ancient Berlandian circus */
 
-import static java.lang.Math.*;
+import static java.lang.Math.PI;
+import static java.lang.Math.hypot;
+import static java.lang.Math.round;
+import static java.lang.Math.sin;
 
 import java.util.Locale;
 import java.util.Scanner;
@@ -182,8 +185,8 @@ final class Point {
 	/**
 	 * Create a new point with the given Cartesian coordinates.
 	 *
-	 * @param x
-	 * @param y
+	 * @param x X coordinate
+	 * @param y Y coordinate
 	 */
 	public Point(double x, double y) {
 		this.x = x;
