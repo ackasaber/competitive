@@ -1,4 +1,5 @@
 package codeforces.beta01;
+
 /* Task 1C. Ancient Berlandian circus */
 
 import static java.lang.Math.PI;

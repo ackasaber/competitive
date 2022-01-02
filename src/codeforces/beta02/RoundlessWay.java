@@ -1,4 +1,5 @@
 package codeforces.beta02;
+
 /* Task 2B. The least round way */
 
 import java.util.ArrayList;

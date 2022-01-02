@@ -1,4 +1,5 @@
 package codeforces.beta02;
+
 /* Task 2C. Commentators */
 
 import static java.lang.Math.*;

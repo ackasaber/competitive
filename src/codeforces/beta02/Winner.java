@@ -1,4 +1,5 @@
 package codeforces.beta02;
+
 /* Task 2A. Winner */
 
 import java.util.*;

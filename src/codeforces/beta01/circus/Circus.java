@@ -1,4 +1,5 @@
 package codeforces.beta01.circus;
+
 /* Task 1C. Ancient Berlandian circus */
 
 import java.util.Locale;
