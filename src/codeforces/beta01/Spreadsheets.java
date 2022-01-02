@@ -1,3 +1,4 @@
+package codeforces.beta01;
 /* Task 1B. Spreadsheets */
 
 import java.util.InputMismatchException;

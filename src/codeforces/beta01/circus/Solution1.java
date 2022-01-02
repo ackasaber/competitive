@@ -1,4 +1,4 @@
-package aveleshko.codeforces.circus;
+package codeforces.beta01.circus;
 
 import static java.lang.Math.*;
 
@@ -39,7 +39,7 @@ enum Solution1 implements RegularPolygon.Builder {
 	 *
 	 * @param A           a polygon vertex
 	 * @param B           a polygon vertex
-	 * @param Ñ           a polygon vertex
+	 * @param C           a polygon vertex
 	 * @param maxVertices a limit on vertex number
 	 * @return the necessary polygon
 	 * @throws IllegalArgumentException If the polygon doesn't exist or the limit on
@@ -47,11 +47,11 @@ enum Solution1 implements RegularPolygon.Builder {
 	 */
 
 	@Override
-	public RegularPolygon build(Point A, Point B, Point Ñ) {
-		Point center = Point.circleCenter(A, B, Ñ);
+	public RegularPolygon build(Point A, Point B, Point C) {
+		Point center = Point.circleCenter(A, B, C);
 		double phiA = center.polarAngle(A);
 		double phiBA = center.polarAngle(B) - phiA;
-		double phiCA = center.polarAngle(Ñ) - phiA;
+		double phiCA = center.polarAngle(C) - phiA;
 		int n = 3;
 
 		while (n <= MAX_VERTICES) {

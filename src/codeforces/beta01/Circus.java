@@ -1,6 +1,13 @@
-package aveleshko.codeforces.circus;
+package codeforces.beta01;
+/* Task 1C. Ancient Berlandian circus */
 
-import static java.lang.Math.*;
+import static java.lang.Math.PI;
+import static java.lang.Math.hypot;
+import static java.lang.Math.round;
+import static java.lang.Math.sin;
+
+import java.util.Locale;
+import java.util.Scanner;
 
 /**
  * The solution from discussion, ideas of
@@ -46,11 +53,34 @@ import static java.lang.Math.*;
  * </p>
  */
 
-enum Solution2 implements RegularPolygon.Builder {
+public final class Circus {
 	/**
-	 * The single instance of the solution.
+	 * Read the three points from the standard input and compute the square of the
+	 * smallest regular polygon with vertices in these points.
+	 *
+	 * @param args command line arguments (not used)
 	 */
-	INSTANCE;
+	public static void main(String[] args) {
+		Scanner scanner = new Scanner(System.in, "UTF-8");
+		scanner.useLocale(Locale.ROOT);
+		Point A = nextPoint(scanner);
+		Point B = nextPoint(scanner);
+		Point C = nextPoint(scanner);
+		double area = minRegularPolygonArea(A, B, C);
+		System.out.println(area);
+	}
+
+	/**
+	 * Read the point coordinates from a text source.
+	 *
+	 * @param scanner text source
+	 * @return a new point with the read coordinates
+	 */
+	private static Point nextPoint(Scanner scanner) {
+		double x = scanner.nextDouble();
+		double y = scanner.nextDouble();
+		return new Point(x, y);
+	}
 
 	/**
 	 * The minimum sector angle to consider according to the task description
@@ -59,8 +89,8 @@ enum Solution2 implements RegularPolygon.Builder {
 	private static final double MIN_ANGLE = PI / 100;
 
 	/**
-	 * Computes angle between AB and BC. This particular implementation is not
-	 * particularly accurate.
+	 * Computes angle between AB and BC. The formula of Prof. W. Kahan,
+	 * "Miscalculating Area and Angles of a Needle-like Triangle".
 	 *
 	 * @param A a point
 	 * @param B a point
@@ -68,14 +98,27 @@ enum Solution2 implements RegularPolygon.Builder {
 	 * @return the angle ABC in radians
 	 */
 	private static double angle(Point A, Point B, Point C) {
-		double rotation = atan2(A.y - B.y, A.x - B.x) - atan2(C.y - B.y, C.x - B.x);
-		double alpha = abs(rotation);
+		double a = hypot(A.x - B.x, A.y - B.y);
+		double b = hypot(C.x - B.x, C.y - B.y);
+		double c = hypot(A.x - C.x, A.y - C.y);
 
-		if (alpha > PI) {
-			alpha = 2 * PI - alpha;
+		if (a < b) {
+			double t = a;
+			a = b;
+			b = t;
 		}
 
-		return alpha;
+		// Now a >= b.
+		double mu;
+
+		if (b >= c) {
+			mu = c - (a - b);
+		} else {
+			mu = b - (a - c);
+		}
+
+		double angle = 2 * Math.atan(Math.sqrt(((a - b) + c) * mu / ((a + (b + c)) * ((a - c) + b))));
+		return angle;
 	}
 
 	/**
@@ -104,10 +147,13 @@ enum Solution2 implements RegularPolygon.Builder {
 	}
 
 	/**
-	 * Builds the minimal regular polygon with vertices in the given points.
+	 * Returns the area of the minimal regular polygon with vertices in the given
+	 * points.
+	 *
+	 * @returns the area of the minimal regular polygon with vertices in the given
+	 *          point
 	 */
-	@Override
-	public RegularPolygon build(Point A, Point B, Point C) {
+	private static double minRegularPolygonArea(Point A, Point B, Point C) {
 		// First find two angles, say, ABC and BCA.
 		double alpha = angle(A, B, C);
 		double beta = angle(B, C, A);
@@ -119,7 +165,32 @@ enum Solution2 implements RegularPolygon.Builder {
 		int n = (int) round(PI / phi);
 		double AC = hypot(C.x - A.x, C.y - A.y);
 		double r = AC / (2 * sin(alpha));
-		return new RegularPolygon(n, r);
+		double area = n * r * r * sin(2 * PI / n) / 2;
+		return area;
 	}
+}
 
+/**
+ * Point on Cartesian plane.
+ */
+final class Point {
+	/**
+	 * X coordinate.
+	 */
+	public final double x;
+	/**
+	 * Y coordinate.
+	 */
+	public final double y;
+
+	/**
+	 * Create a new point with the given Cartesian coordinates.
+	 *
+	 * @param x X coordinate
+	 * @param y Y coordinate
+	 */
+	public Point(double x, double y) {
+		this.x = x;
+		this.y = y;
+	}
 }

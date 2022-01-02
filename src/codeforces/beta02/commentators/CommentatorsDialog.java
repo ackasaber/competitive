@@ -1,4 +1,4 @@
-package aveleshko.codeforces.commentators;
+package codeforces.beta02.commentators;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;

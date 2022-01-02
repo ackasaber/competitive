@@ -1,4 +1,4 @@
-package aveleshko.codeforces.commentators;
+package codeforces.beta02.commentators;
 
 import java.text.NumberFormat;
 import java.text.ParseException;

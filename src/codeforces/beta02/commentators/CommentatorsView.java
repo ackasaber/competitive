@@ -1,4 +1,4 @@
-package aveleshko.codeforces.commentators;
+package codeforces.beta02.commentators;
 
 import static java.lang.Math.*;
 

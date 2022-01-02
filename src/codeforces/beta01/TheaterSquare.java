@@ -1,3 +1,4 @@
+package codeforces.beta01;
 import java.util.Scanner;
 import static java.lang.System.out;
 

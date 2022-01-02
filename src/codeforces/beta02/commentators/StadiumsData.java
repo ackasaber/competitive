@@ -1,4 +1,4 @@
-package aveleshko.codeforces.commentators;
+package codeforces.beta02.commentators;
 
 /**
  * Location data for three stadiums.

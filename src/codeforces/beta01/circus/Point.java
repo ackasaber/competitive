@@ -1,4 +1,4 @@
-package aveleshko.codeforces.circus;
+package codeforces.beta01.circus;
 import static java.lang.Math.atan2;
 
 /**
