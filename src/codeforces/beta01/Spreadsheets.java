@@ -1,5 +1,9 @@
 package codeforces.beta01;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+
 /* Task 1B. Spreadsheets */
 
 import java.util.InputMismatchException;
@@ -18,7 +22,10 @@ public final class Spreadsheets {
 	 * @param args command line arguments (ignored)
 	 */
 	public static void main(String[] args) {
-		Scanner scanner = new Scanner(System.in, "UTF-8");
+		var reader = new InputStreamReader(System.in, StandardCharsets.US_ASCII);
+		var bufferedReader = new BufferedReader(reader);
+		@SuppressWarnings("resource")
+		Scanner scanner = new Scanner(bufferedReader);
 		int n = scanner.nextInt();
 
 		if (n < 1 || n > 100_000) {

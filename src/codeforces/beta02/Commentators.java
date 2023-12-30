@@ -4,7 +4,7 @@ package codeforces.beta02;
 
 import static java.lang.Math.*;
 import java.math.BigInteger;
-
+import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Scanner;
@@ -68,7 +68,7 @@ public final class Commentators {
 	 */
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.ROOT);
-		var scanner = new Scanner(System.in, "ASCII");
+		var scanner = new Scanner(System.in, StandardCharsets.US_ASCII);
 		var s1 = readStadium(scanner);
 		var s2 = readStadium(scanner);
 		var s3 = readStadium(scanner);

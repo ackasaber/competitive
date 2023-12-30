@@ -5,6 +5,8 @@ package codeforces.beta01;
 import java.util.Scanner;
 import static java.lang.System.out;
 
+import java.nio.charset.StandardCharsets;
+
 public class TheaterSquare {
     static long flagstoneCount(int n, int m, int a) {
         /* multiplication in the end would require a wider type */
@@ -19,7 +21,8 @@ public class TheaterSquare {
     }
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        @SuppressWarnings("resource")
+		Scanner scanner = new Scanner(System.in, StandardCharsets.US_ASCII);
         int n = scanner.nextInt();
         int m = scanner.nextInt();
         int a = scanner.nextInt();

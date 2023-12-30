@@ -5,6 +5,9 @@ package codeforces.beta03;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 import static java.lang.System.out;
+
+import java.nio.charset.StandardCharsets;
+
 import static java.lang.Integer.max;
  
 /**
@@ -19,7 +22,7 @@ public class KingsPath {
 	 * @param args command line arguments (unused)
 	 */
 	public static void main(String[] args) {
-		var scanner = new Scanner(System.in, "ASCII");
+		var scanner = new Scanner(System.in, StandardCharsets.US_ASCII);
 		var s = ChessPosition.next(scanner);
 		var t = ChessPosition.next(scanner);
  

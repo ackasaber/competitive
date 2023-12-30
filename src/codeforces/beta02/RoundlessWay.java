@@ -1,5 +1,9 @@
 package codeforces.beta02;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+
 /* Task 2B. The least round way */
 
 import java.util.ArrayList;
@@ -17,7 +21,9 @@ public final class RoundlessWay {
 	 * @param args command-line arguments (unused)
 	 */
 	public static void main(String[] args) {
-		var scanner = new Scanner(System.in, "US-ASCII");
+		var reader = new InputStreamReader(System.in, StandardCharsets.US_ASCII);
+		var bufferedReader = new BufferedReader(reader);
+		var scanner = new Scanner(bufferedReader);
 		var table = Table.read(scanner);
 		// Solve for powers of 2 and 5 and pick the smallest.
 		// The smallest solution will have the same or larger power of the other number.

@@ -1,5 +1,7 @@
 package codeforces.beta01.circus;
 
+import java.nio.charset.StandardCharsets;
+
 /* Task 1C. Ancient Berlandian circus */
 
 import java.util.Locale;
@@ -16,7 +18,7 @@ public final class Circus {
 	 * @param args command line arguments (not used)
 	 */
 	public static void main(String[] args) {
-		Scanner scanner = new Scanner(System.in, "UTF-8");
+		Scanner scanner = new Scanner(System.in, StandardCharsets.US_ASCII);
 		scanner.useLocale(Locale.ROOT);
 		Point a = nextPoint(scanner);
 		Point b = nextPoint(scanner);

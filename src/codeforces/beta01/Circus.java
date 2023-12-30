@@ -7,6 +7,7 @@ import static java.lang.Math.hypot;
 import static java.lang.Math.round;
 import static java.lang.Math.sin;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -62,7 +63,7 @@ public final class Circus {
 	 * @param args command line arguments (not used)
 	 */
 	public static void main(String[] args) {
-		Scanner scanner = new Scanner(System.in, "UTF-8");
+		Scanner scanner = new Scanner(System.in, StandardCharsets.US_ASCII);
 		scanner.useLocale(Locale.ROOT);
 		Point A = nextPoint(scanner);
 		Point B = nextPoint(scanner);

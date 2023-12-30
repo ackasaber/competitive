@@ -1,8 +1,15 @@
 package codeforces.beta02;
 
-/* Task 2A. Winner */
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
-import java.util.*;
+/* Task 2A. Winner */
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 
 /**
  * The task solution.
@@ -15,7 +22,10 @@ public final class Winner {
 	 * @param args commmand line arguments (unused)
 	 */
 	public static void main(String[] args) {
-		var scanner = new Scanner(System.in, "UTF-8");
+		var reader = new InputStreamReader(System.in, StandardCharsets.US_ASCII);
+		var bufferedReader = new BufferedReader(reader);
+		@SuppressWarnings("resource")
+		var scanner = new Scanner(bufferedReader);
 
 		// Read the score change history.
 		List<ScoreRecord> scoreHistory = new ArrayList<>();
