@@ -16,8 +16,12 @@ Additionally, Java core language features were put to test.
 The online judges restrict solutions to a single file per solution.
 Therefore there is no inter-file structure of any kind and the code
 is just an Eclipse project with a bunch of files. The only structure
-is on the task origin. Any particular solution can be run in Eclipse
+is by the task origin. Any particular solution can be run in Eclipse
 by pressing Alt+Shift+X, J with the solution Java file focused.
+
+Note that while the classes are placed in packages, the online judges
+don't support it, so sending the solution would require deleting the
+package declaration line.
 
 JDK 21 was used, but not necessarily its newest features.
 

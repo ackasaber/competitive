@@ -1,11 +1,10 @@
 package codeforces.beta01;
 
+/* Task 1B. Spreadsheets */
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-
-/* Task 1B. Spreadsheets */
-
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.regex.Matcher;

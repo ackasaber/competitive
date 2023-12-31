@@ -1,10 +1,10 @@
 package codeforces.beta02;
 
+/* Task 2A. Winner */
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-
-/* Task 2A. Winner */
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
