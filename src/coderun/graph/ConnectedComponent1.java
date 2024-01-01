@@ -8,7 +8,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayDeque;
 import java.util.Scanner;
 
 /**
@@ -30,7 +29,7 @@ public class ConnectedComponent1 {
 		var bufferedInput = new BufferedReader(input);
 		var scanner = new Scanner(bufferedInput);
 		var adj = readAdjacencyMatrix(scanner);
-		var marks = dfs(adj, 0);
+		var marks = visit(adj, 0);
 		
 		var output = new OutputStreamWriter(System.out, StandardCharsets.US_ASCII);
 		var bufferedOutput = new BufferedWriter(output);
@@ -60,16 +59,20 @@ public class ConnectedComponent1 {
 	}
 	
 	/**
-	 * Performs the depth-first search starting from the given vertex.
+	 * Performs the search starting from the given vertex.
+	 * 
+	 * <p>This is not actually a depth-first search. This is a depth-first
+	 * search with the queue being replaced with a stack. This doesn't change
+	 * the answer, it's just a bit easier to implement the stack.</p>
 	 * 
 	 * @param M the graph adjacency matrix
 	 * @param u0 the starting vertex index
 	 * @return array that marks the visited vertices
 	 */
-	static boolean[] dfs(boolean[][] M, int u0) {
+	static boolean[] visit(boolean[][] M, int u0) {
 		int n = M.length;
 		var marks = new boolean[n];
-		var stack = new ArrayDeque<Integer>(n);
+		var stack = new IntStack(n);
 		stack.push(u0);
 		marks[u0] = true;
 		

@@ -5,7 +5,6 @@ package coderun.graph;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayDeque;
 import java.util.Scanner;
 
 /**
@@ -18,7 +17,7 @@ public class BipartiteCheck {
 
 	/**
 	 * Reads the undirected graph definition from the standard output and
-	 * reports whether the graph is bipertite to the standard output.
+	 * reports whether the graph is bipartite to the standard output.
 	 * 
 	 * @param args command line arguments (unused)
 	 */
@@ -45,11 +44,12 @@ public class BipartiteCheck {
 	private static boolean isBipartite(boolean[][] M) {
 		int n = M.length;
 		var color = new int[n];
-		var stack = new ArrayDeque<Integer>(n);
+		var stack = new IntStack(n);
 		
 		for (int u0 = 0; u0 < n; u0++) {
 			if (color[u0] == 0) {
 				stack.push(u0);
+				color[u0] = 1;
 				
 				do {
 					int u = stack.pop();
