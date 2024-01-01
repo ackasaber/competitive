@@ -1,6 +1,6 @@
 package coderun.graph;
 
-/* Task 12. Shortest path */
+/* Task 13. Shortest path */
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
