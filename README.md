@@ -13,18 +13,20 @@ Additionally, Java core language features were put to test.
 
 ## Running the code
 
-The online judges restrict solutions to a single file per solution.
-I do not adhere to this strategy completely in this repository. General-purpose
-classes are being reused between different solutions, for example, the class
-`IntStack` that is omnipresent in simple graph problem solutions.
-Generally the solutions are grouped by the task origin. Any particular solution
-can be run in Eclipse by pressing Alt+Shift+X, J with the solution Java file
-focused.
+The online judges place a number of restrictions on the solution code.
+I generally don't follow them in this repository since they vary greatly
+and are inconvenient. I do keep a single file per solution, but in some cases
+various general-purpose classes are extracted into a separate file.
+For example, the class `IntStack` that is omnipresent in simple graph problem
+solutions. Generally the solutions are grouped by the task origin. Any
+particular solution can be run in Eclipse by pressing Alt+Shift+X, J with the
+solution Java file focused.
 
-Note that while the classes are placed in packages, the online judges
-don't support it, so sending the solution would require deleting the
-package declaration line. If a general-purpose class is being used, copy-paste
-it as a static inner class into the solution class.
+Therefore submitting these solutions requires adaptation: renaming
+the class, removing the package declaration, copying any used general-purpose
+classes into the solution file as static inner classes and so on.
+LeetCode solutions in particular don't need I/O code but I still write it
+for local testing and debugging.
 
 The solutions were written for JDK 21, but should generally be compatible with
 the earlier JDK versions.
