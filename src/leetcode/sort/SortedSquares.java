@@ -1,4 +1,4 @@
-package leetcode.greedy;
+package leetcode.sort;
 
 /* Task 977. Squares of a Sorted Array */
 

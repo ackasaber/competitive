@@ -1,4 +1,4 @@
-package leetcode.greedy;
+package leetcode.hash;
 
 /* Task 560. Subarray Sum Equals K */
 
