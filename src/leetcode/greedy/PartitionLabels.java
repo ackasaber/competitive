@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Task solution.
+ * The task solution.
  * 
  * <p>While the task description is quite scary, after some thinking you realize
  * that the solution structure isn't very complicated.</p>

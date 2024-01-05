@@ -10,7 +10,7 @@ import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * Task solution.
+ * The task solution.
  * 
  * <p>Let <i>P</i>[<i>i</i>] denote the sum of the first <i>i</i> elements
  * of the input array <i>A</i>. Then subarray <i>A</i>[<i>r</i> .. <i>q</i>] sum

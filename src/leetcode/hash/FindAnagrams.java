@@ -15,7 +15,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Task solution.
+ * The task solution.
  * 
  * <p>We can count letter frequencies of each candidate substring of the first
  * string and compare them with the letter frequencies of the second string.

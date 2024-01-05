@@ -12,7 +12,7 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 
 /**
- * Task solution.
+ * The task solution.
  *
  * <p>As it's seen from the example the catch is that there can be negative
  * numbers. It doesn't change much though &ndash; we just merge the squares of
