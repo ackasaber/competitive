@@ -129,6 +129,5 @@ public final class Circus {
         return n * r * r * sin(2 * PI / n) / 2;
 	}
 
-	record Point(double x, double y) {
-	}
+	record Point(double x, double y) {}
 }
