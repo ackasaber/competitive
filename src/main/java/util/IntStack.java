@@ -1,7 +1,7 @@
 package util;
 
 public final class IntStack {
-	private int[] array;
+	private final int[] array;
 	private int length;
 	
 	public IntStack(int capacity) {
