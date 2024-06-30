@@ -1,6 +1,6 @@
 package codeforces.beta01;
 
-/* A. Theater square. */
+// A. Theater square
 
 import java.util.Scanner;
 import static java.lang.System.out;
