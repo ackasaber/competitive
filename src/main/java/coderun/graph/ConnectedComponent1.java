@@ -2,6 +2,8 @@ package coderun.graph;
 
 /* Task 7. Depth-first search */
 
+import util.IntStack;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;

@@ -2,6 +2,8 @@ package coderun.graph;
 
 /* Task 10. Topological sorting */
 
+import util.IntStack;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;

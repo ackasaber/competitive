@@ -2,6 +2,8 @@ package coderun.graph;
 
 /* Task 11. Finding a cycle */
 
+import util.IntStack;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
