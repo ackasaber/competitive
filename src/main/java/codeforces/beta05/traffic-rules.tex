@@ -1,0 +1,256 @@
+\setuplayout
+	[backspace=20mm,
+	 width=middle,
+	 topspace=15mm,
+	 height=fit,
+	 header=0cm,
+	 headerdistance=0cm,
+	 footer=\lineheight,
+	 footerdistance=4mm]
+	 
+\setupheader[text][state=high]
+\setupfootertexts[][pagenumber][pagenumber][]
+\setupwhitespace[line]
+\setupmathematics[integral=limits]
+\let\le\leqslant
+\let\ge\geqslant
+\starttext
+\starttitle[title={Traffic Rules}]
+
+For convenience let's rename the inputs. Let the maximum car speed be
+$V\unit{km/h}$, the maximum speed allowed at the sign be $W\unit{km/h}$ and the
+overall road length $L\unit{km}$.
+
+Let $v(t)$ be the car speed at the time $t$ and
+
+\startformula\ell(t) = \int_0^t v(\tau) \dd\tau\stopformula
+
+be the distance that the car has covered at that moment. Out task is to organize
+car movement so that the time $t_*$ such that $\ell(t_*) = L$ is minimal.
+
+There are following restrictions on the car movement.
+
+\startitemize[n]
+\item The starting speed is zero: $v(0) = 0$.
+\item The maximum car speed cannot surpass $V$: $v(t) \le V$.
+\item The speed at the sign doesn't surpass $W$, that is, when $\ell(t) = d$
+the speed $v(t) \le W$. Let $t_d$ be the time of reaching the sign.
+\item The car can't accelerate and decelerate faster than $a\unit{km/h2}$:
+$|v'(t)| \le a$.
+\stopitemize
+
+The solution splits into a variety of cases which we group based on whether we
+decelerate at the sign and whether we reach the maximum speed.
+
+\startsection[title={We don't decelerate at the sign}]
+
+First we'll consider the solution itself for this case and then when it occurs.
+
+Since we don't decelerate at the sign in this case, the optimal car movement is
+as follows. We accelerate with the maximum acceleration $a$ until the maximum
+speed $V$ is reached and then proceed with the speed $V$ until the road ends.
+
+\startformula v(t) = \startmathcases
+\NC at, \NC 0\le t\le t_V,\NR
+\NC V, \NC t > t_V.\NR
+\stopmathcases \stopformula
+
+It might happen that the road ends before we reach the maximum speed though.
+
+Given the optimal car movement, the time to reach the maximum speed
+
+\startformula t_V = \frac{V}{a}\stopformula
+
+and the distance that the car covers during this time is
+
+\startformula L_V = \frac{V^2}{2a}. \stopformula
+
+If $L < L_V$, that is when \inframed{$2aL < V^2$}, then the road ends before we
+reach the full speed and
+
+\startformula L = \ell(t_*) = \frac{at_*^2}{2},\quad\text{thus}\quad
+\mcframed{t_* = \sqrt{\frac{2L}{a}}}.\stopformula
+
+\stopsubsection
+
+In the opposite case \inframed{$2aL \ge V^2$} we have
+
+\startformula L = \ell(t_*) = \int_0^{t_V} a\tau\dd\tau + \int_{t_V}^{t_*}
+V\dd\tau = \frac{at_V^2}{2} + V(t_* - t_V). \stopformula
+
+Here we express
+
+\startformula t_* = \frac{1}{V}\cdot\left(L - \frac{at_V^2}{2}\right)
+ + t_V = \mcframed{\frac{L}{V} + \frac{V}{2a}}. \stopformula
+
+When does the car not decelerate at the sign? First, if $W \ge V$, clearly we
+don't have to decelerate. Otherwise we would cover distance
+
+\startformula L_W = \frac{W^2}{2a} \stopformula
+
+in order to reach speed $W$ and if $d \le L_W$, that is, $2ad\le W^2$, we would
+not accelerate enough to violate the speed restriction at the sign. To
+summarize, we don't decelerate at the sign when
+
+\startformula \mcframed{W\ge V\quad\text{or}\quad 2ad \le W^2}.\stopformula
+
+\stopsection
+
+\startsection[title={We have to decelerate at the sign}]
+
+In this more complicated case the optimal car movement looks as follows. First
+we accelerate to speed $V$, drive with that speed, then decelerate to speed $W$
+at the sign. After the sign we again accelerate to speed $V$ and drive until the
+road ends. Again, we might not hit speed $V$ before the sign as well as after
+the sign.
+
+Let's first find the time $t_d$ to reach the sign.
+
+\startsubsection[title={Maximum speed reached before the sign}]
+
+If we hit the maximum speed before reaching the sign, the optimal speed
+
+\startformula v(t) = \startmathcases
+\NC at, \NC 0\le t\le t_V,\NR
+\NC V, \NC t_V < t \le t_s,\NR
+\NC W - a(t-t_d), \NC t_s < t \le t_d,\NR
+\stopmathcases\stopformula
+
+where $t_s$ is the time we start decelerating.
+
+We have already found the time $t_V$ and the distance $L_V$ of accelerating to
+speed $V$.
+
+\startformula t_V = \frac{V}{a},\quad L_V = \frac{V^2}{2a}.\stopformula
+
+Since we expect continuity of $v(t)$ in the point $t_s$, we have
+
+\startformula W - a(t_s - t_d) = V,\quad\text{and the deceleration time}\quad
+\quad t_d - t_s = \frac{V-W}{a}.\stopformula
+
+The deceleration distance is
+
+\startformula L_{VW} = \int_{t_s}^{t_d} v(\tau)\dd\tau = \frac{V^2 - W^2}{2a}.
+\stopformula
+
+From this we get the following expression for the distance to the sign.
+
+\startformula d = \ell(t_d) = L_V + (t_s - t_V) \cdot V + L_{VW} = \frac{2V^2 -
+W^2}{2a} + (t_d - t_V - (t_d - t_s))\cdot V = \frac{2V^2 - W^2}{2a} + \left(t_d
+- \frac{2V - W}{a}\right). \stopformula
+
+Therefore the time to reach the sign in this case is
+
+\startformula \mcframed{t_d = \frac{2V - W}{a} + \frac{1}{V}\cdot \left(d -
+\frac{2V^2 - W^2}{2a}\right)}. \stopformula
+
+The formula is effective when the speed $V$ is reached, that is, when $L_V +
+L_{VW} \le d$, or
+
+\startformula \mcframed{2V^2 - W^2 \le 2ad}. \stopformula
+
+\stopsubsection
+
+\startsubsection[title={Maximum speed not reached before the sign}]
+
+If we don't hit the maximum speed before reaching the sign, the optimal speed
+
+\startformula v(t) = \startmathcases
+\NC at, \NC 0\le t\le t_X, \NR
+\NC W - a(t-t_d), \NC t_X < t \le t_d,\NR
+\stopmathcases \stopformula
+
+where $t_X$ is the moment when the acceleration stops and we start decelerating
+before the sign. Let's get the expression for the distance to the sign.
+
+\startformula d = \ell(t_d) = \int_0^{t_X} a\tau\dd\tau + \int_{t_X}^{t_d} (W -
+a(\tau - t_d))\dd\tau. \stopformula
+
+The first integral equals $\frac{at_X^2}{2}$. We change the variable in the
+second integral: $u = W - a(\tau - t_d)$, $\dd\tau = -\frac{\dd u}{a}$.
+
+\startformula \int_{t_X}^{t_d} (W - a(\tau - t_d))\dd\tau = \int_{W - a(t_X -
+t_d)}^W u\cdot \left(-\frac{\dd u}{a}\right). \stopformula
+
+The point $t_X$ is defined to satisfy equality $W - a(t_X - t_d) = at_X$, which
+we'll use in the integration limit.
+
+\startformula \int_{t_X}^{t_d} (W - a(\tau - t_d))\dd\tau = -\frac{1}{a} \cdot
+\int_{at_X}^W u\dd u = \frac{1}{a} \cdot \int_W^{at_X} u\dd u = \frac{(a^2 t_X^2
+- W^2)}{2a} = \frac{at_X^2}{2} - \frac{W^2}{2a}.\stopformula
+
+In total for the $\ell(t_d)$ we have
+
+\startformula d = \ell(t_d) = at_X^2 - \frac{W^2}{2a}. \stopformula
+
+From this we can express the time $t_X$.
+
+\startformula t_X = \sqrt{\frac{d}{a} + \frac{W^2}{2a^2}} = \frac{\sqrt{4ad +
+2W^2}}{2a}. \stopformula
+
+From the condition on $t_X$ we can find already $t_d$.
+
+\startformula t_d = 2\left(t_X - \frac{W}{2a}\right) = \mcframed{\frac{\sqrt{4ad
++ 2W^2} - W}{a}}. \stopformula
+
+From now on we consider the time $t_d$ to reach the sign a known quantity. We
+can concentrate on finding the rest of the time needed to reach to destination.
+
+\stopsubsection
+
+\startsubsection[title={Maximum speed reached after the sign}]
+
+If the car reaches the maximum speed after the sign before finishing the ride,
+the speed function looks as follows.
+
+\startformula v(t) = \startmathcases
+\NC W + a(t-t_d), \NC t_d < t \le t_{WV},\NR
+\NC V, \NC t_{WV} < t \le t_*,\NR
+\stopmathcases \stopformula
+
+where $t_{WV}$ is the time the car reaches the maximum speed $V$.
+
+The time to accelerate from the speed $W$ to $V$ and the distance covered during
+the acceleration is clearly the same as the time and distance for deceleration.
+
+\startformula t_{WV} - t_d = \frac{V-W}{a},\quad L_{WV} = \frac{V^2 - W^2}{2a}.
+\stopformula
+
+Since the overall distance from the sign to the end is $L-d$, we have the
+following condition for the case: $L_{WV} \le L - d$, that is, $\inmframed{V^2 -
+W^2 \le 2a(L - d)}$.
+
+We find $t_*$ in this case by expanding the definition $\ell(t_*) = L$.
+
+\startformula L_{WV} + V(t_* - t_{WV}) + d = L, \stopformula
+
+that is,
+
+\startformula \mcframed{t_* = t_d + \frac{V-W}{a} + \frac{1}{V}\cdot \left(L - d
+- \frac{V^2 - W^2}{2a}\right)}. \stopformula
+
+\stopsubsection
+
+\startsubsection[title={Maximum speed not reached after the sign}]
+
+In this case the optimal movement speed is
+
+\startformula v(t) = W + a(t-t_d)\quad\text{for } t_d < t \le t_*. \stopformula
+From this we get the following expression for the distance covered after the
+sign:
+
+\startformula \int_{t_d}^{t_*} (W + a(\tau - t_d))\dd\tau. \stopformula
+
+We know that this distance equals $L-d$ though. Let's change the integration
+variable with substitution $u = W + a(\tau - t_d)$, $\dd\tau = \frac{1}{a}\dd
+u$.
+
+\startformula L-d = \int_W^{W - a(t_* - t_d)} \frac{u\dd u}{a} =
+\frac{1}{2a}\cdot \left((W + a(t_* - t_d))^2 - W^2\right). \stopformula
+
+From this we get the formula for $t_*$ in the final case:
+
+\startformula \mcframed{t_* = t_d + \frac{\sqrt{W^2 + 2a(L-d)} - W}{a}}.
+\stopformula
+
+\stopsubsection \stopsection \stoptitle \stoptext
