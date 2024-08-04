@@ -1,15 +1,10 @@
 package codeforces.beta05;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.Scanner;
-
-import static java.nio.charset.StandardCharsets.US_ASCII;
+import util.AsciiScanner;
 
 public class BindianSignalizing {
     public static void main(String[] args) {
-        var reader = new InputStreamReader(System.in, US_ASCII);
-        var scanner = new Scanner(new BufferedReader(reader));
+        var scanner = new AsciiScanner(System.in, 4 * 1024);
         var circle = new HillCircle(scanner);
         System.out.println(circle.countVisiblePairs());
     }
@@ -17,31 +12,7 @@ public class BindianSignalizing {
     private static class HillCircle {
         private HillGroup chain;
 
-        public HillCircle(int[] heights) {
-            int n = heights.length;
-            if (n < 3)
-                throw new IllegalArgumentException("n < 3");
-
-            int h1 = heights[0];
-            chain = new HillGroup(h1);
-
-            for (int i = 1; i < n; i++) {
-                int h = heights[i];
-
-                if (chain.height == h)
-                    chain.count++;
-                else
-                    chain = new HillGroup(h, chain);
-            }
-
-            if (chain.next != chain && chain.height == chain.next.height) {
-                HillGroup extra = chain;
-                chain = chain.next;
-                chain.merge(extra);
-            }
-        }
-
-        public HillCircle(Scanner scanner) {
+        public HillCircle(AsciiScanner scanner) {
             int n = scanner.nextInt();
 
             if (n < 3)
@@ -70,24 +41,32 @@ public class BindianSignalizing {
         public long countVisiblePairs() {
             long count = 0;
 
-            while (chain.next != chain) {
-                HillGroup lowGround = chain.runDownhill();
-                int k = lowGround.count;
+            while (chain.next != chain.previous) {
+                if (chain.previous.height > chain.height &&
+                    chain.next.height > chain.height) {
+                    var c = chain;
+                    chain = c.previous;
+                    count += (long) c.count * (c.count + 3) / 2;
+                    c.remove();
 
-                if (lowGround.next.next == lowGround && lowGround.next.count == 1)
-                    count += (long) k * (k + 1) / 2;
-                else
-                    count += (long) k * (k + 3) / 2;
-
-                chain = lowGround.previous;
-                lowGround.remove();
-
-                if (chain.next != chain && chain.height == chain.next.height)
-                    chain.merge(chain.next);
+                    if (chain.next != chain && chain.height == chain.next.height)
+                        chain.merge(chain.next);
+                } else {
+                    chain = chain.next;
+                }
             }
 
-            int m = chain.count;
-            count += (long) m * (m - 1) / 2;
+            if (chain.height > chain.next.height)
+                chain = chain.next;
+
+            if (chain.height < chain.next.height) {
+                if (chain.next.count == 1)
+                    count += (long) chain.count * (chain.count + 1) / 2;
+                else
+                    count += (long) chain.count * (chain.count + 3) / 2;
+                chain = chain.next;
+            }
+            count += (long) chain.count * (chain.count - 1) / 2;
             return count;
         }
     }
@@ -115,18 +94,6 @@ public class BindianSignalizing {
         public void merge(HillGroup group) {
             count += group.count;
             group.remove();
-        }
-
-        public HillGroup runDownhill() {
-            HillGroup g = this;
-
-            while (g.height > g.previous.height)
-                g = g.previous;
-
-            while (g.height > g.next.height)
-                g = g.next;
-
-            return g;
         }
 
         public void remove() {
