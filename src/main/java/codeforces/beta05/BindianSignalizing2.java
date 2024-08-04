@@ -4,6 +4,12 @@ import util.AsciiScanner;
 
 import java.util.ArrayDeque;
 
+/**
+ * This actually does the same as the first solution, but the traversed sequence is stored in
+ * one stack and one queue. The downward running part is in the stack, the upward running is in the
+ * queue. Since we don't know from where the one-before-last hill group will come, stack or queue,
+ * the summing of "valley" yields is delayed by a hill group.
+ */
 public class BindianSignalizing2 {
     public static void main(String[] args) {
         var scanner = new AsciiScanner(System.in, 4 * 1024);
@@ -17,6 +23,7 @@ public class BindianSignalizing2 {
         var totaller = new Totaller();
         var stack = new ArrayDeque<HillGroup>();
         var queue = new ArrayDeque<HillGroup>();
+        // The top item of the stack is kept separately for convenience.
         var top = new HillGroup(heights[0]);
 
         for (int i = 1; i < n; i++) {
