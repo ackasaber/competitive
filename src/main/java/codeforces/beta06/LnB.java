@@ -1,54 +1,66 @@
 package codeforces.beta06;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.Scanner;
+import java.util.Arrays;
+
+import static java.nio.charset.StandardCharsets.US_ASCII;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static java.nio.charset.StandardCharsets.US_ASCII;
-
 public class LnB {
-    private static final Logger logger = LoggerFactory.getLogger(LnB.class);
-    
+
     public static void main(String[] args) {
         var reader = new InputStreamReader(System.in, US_ASCII);
         var scanner = new Scanner(new BufferedReader(reader));
         var game = new LnBGame(scanner);
         var lnb = new LnB(game);
         var sol = lnb.findBestCasts();
-        sol.report();
+        var writer = new OutputStreamWriter(System.out, US_ASCII);
+        var printer = new PrintWriter(new BufferedWriter(writer));
+        sol.report(printer);
+        printer.flush();
     }
 
-    private LnBGame game;
-    private CastSet current, best;
+    private static final Logger logger = LoggerFactory.getLogger(LnB.class);
+    
+    private final int a, b;
+    private final int[] hp;
+    private final CastSet current, best;
 
     public LnB(LnBGame game) {
-        this.game = game;
-        current = new CastSet(game.height.length);
-        best = CastSet.anyKilling(game);
+        a = game.a;
+        b = game.b;
+        hp = game.hp.clone();
+        current = new CastSet(hp.length);
+        best = new CastSet(hp.length);
+        best.total = Integer.MAX_VALUE;
     }
     
     public CastSet findBestCasts() {
-        searchBestCasts(2);
+        searchBestCasts(1);
         return best;
     }
 
     private void searchBestCasts(int k) {
-        logger.debug("searchBestCasts {}", k);
-        report();
+        logger.atDebug().setMessage("searchBestCasts {} {}")
+                .addArgument(k).addArgument(() -> Arrays.toString(hp)).log();
         
         if (current.total >= best.total)
             return;
 
-        int n = game.height.length;
+        int n = hp.length;
 
-        if (k == n-1) {
+        if (k == n-2) {
             int lastHits = max(
-                    killingBarrage(k-1, game.b),
-                    killingBarrage(k, game.a),
-                    killingBarrage(k+1, game.b)
+                    killingBarrage(k-1, b),
+                    killingBarrage(k, a),
+                    killingBarrage(k+1, b)
             );
             logger.debug("last position hits = {}", lastHits);
 
@@ -61,8 +73,8 @@ public class LnB {
             return;
         }
 
-        int minHits = killingBarrage(k-1, game.b);
-        int maxHits = killingBarrage(k, game.a);
+        int minHits = killingBarrage(k-1, b);
+        int maxHits = killingBarrage(k, a);
         logger.debug("minHits = {} to maxHits = {}", minHits, maxHits);
         fire(k, minHits);
         searchBestCasts(k+1);
@@ -79,45 +91,20 @@ public class LnB {
     }
 
     private void fire(int k, int times) {
-        damage(k-1, game.b*times);
-        damage(k, game.a*times);
-        damage(k+1, game.b*times);
-        current.cast(k-2, times);
+        hp[k-1] -= b*times;
+        hp[k] -= a*times;
+        hp[k+1] -= b*times;
+        current.casts[k-1] += times;
+        current.total += times;
     }
 
     private int max(int x, int y, int z) {
-        int m = x;
-
-        if (y > m)
-            m = y;
-
-        if (z > m)
-            m = z;
-
-        return m;
-    }
-
-    public void damage(int k, int units) {
-        game.height[k-1] -= units;
+        return Math.max(Math.max(x, y), z);
     }
 
     public int killingBarrage(int k, int damage) {
-        int hp = game.height[k-1];
-
-        if (hp < 0)
+        if (hp[k] < 0)
             return 0;
-
-        return hp/damage + 1;
-    }
-
-    public void report() {
-        var line = new StringBuilder();
-        
-        for (int j = 0; j < game.height.length; j++) {
-            line.append(game.height[j]);
-            line.append(' ');
-        }
-        
-        logger.debug("{}", line);
+        return hp[k]/damage + 1;
     }
 }
