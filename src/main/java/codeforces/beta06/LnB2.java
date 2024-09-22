@@ -1,5 +1,7 @@
 package codeforces.beta06;
 
+// D. Lizards and Basements
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
@@ -11,6 +13,11 @@ import static java.nio.charset.StandardCharsets.US_ASCII;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+/**
+ * A dynamic programming solution with 3 parameters: number of archers, hits on the last archer
+ * and hits on the one after it.
+ */
 
 public class LnB2 {
     private static final Logger logger = LoggerFactory.getLogger(LnB2.class);

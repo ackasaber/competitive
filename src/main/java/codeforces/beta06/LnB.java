@@ -1,5 +1,7 @@
 package codeforces.beta06;
 
+// D. Lizards and Basements
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
@@ -13,6 +15,9 @@ import static java.nio.charset.StandardCharsets.US_ASCII;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * A simple backtracking solution.
+ */
 public class LnB {
 
     public static void main(String[] args) {
