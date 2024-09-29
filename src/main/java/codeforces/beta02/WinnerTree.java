@@ -1,51 +1,31 @@
 package codeforces.beta02;
 
-/* Task 2A. Winner */
+// A. Winner
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
+
+import static java.nio.charset.StandardCharsets.US_ASCII;
 
 /**
  * The task solution using a radix tree.
  */
 public final class WinnerTree {
 
-	/**
-	 * A record about score change.
-	 */
 	private static final class ScoreRecord {
-		/**
-		 * The player name.
-		 */
 		public String playerName;
-		/**
-		 * The change of the score after a single game move.
-		 */
 		public int scoreChange;
 
-		/**
-		 * Creates the record about one game move.
-		 *
-		 * @param playerName  the player name
-		 * @param scoreChange the score change
-		 */
 		public ScoreRecord(String playerName, int scoreChange) {
 			this.playerName = playerName;
 			this.scoreChange = scoreChange;
 		}
 	}
 	
-	/**
-	 * Reads the score history, finds the winner and writes its name.
-	 *
-	 * @param args the commmand line arguments (unused)
-	 */
 	public static void main(String[] args) {
-		var reader = new InputStreamReader(System.in, StandardCharsets.US_ASCII);
+		var reader = new InputStreamReader(System.in, US_ASCII);
 		var bufferedReader = new BufferedReader(reader);
-		@SuppressWarnings("resource")
 		var scanner = new Scanner(bufferedReader);
 
 		// Read the score change history.
@@ -88,13 +68,7 @@ public final class WinnerTree {
 		 * The last letter in the path from the root.
 		 */
 		private char letter;
-		/**
-		 * Links the sibling nodes in a list.
-		 */
 		private LetterNode nextSibling;
-		/**
-		 * The first child node.
-		 */
 		private LetterNode firstChild;
 		/**
 		 * True if the tree contains a player with the name corresponding

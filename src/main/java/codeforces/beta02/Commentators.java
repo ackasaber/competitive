@@ -1,24 +1,20 @@
 package codeforces.beta02;
 
-/* Task 2C. Commentators */
+// C. Commentators
 
-import static java.lang.Math.*;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Scanner;
 
+import static java.lang.Math.*;
+
 /**
- * The task solution.
- *
- * The solution is calculated via a formula. See Commentators.odf.
+ * The solution calculated via a formula from Commentators.odf.
  */
 public final class Commentators {
 
-	/**
-	 * Single stadium location definition.
-	 */
 	private final static class Stadium {
 		/**
 		 * Stadium center x coordinate.
@@ -33,13 +29,6 @@ public final class Commentators {
 		 */
 		public final int r;
 
-		/**
-		 * Stores the stadium location definition into the class instance.
-		 *
-		 * @param x stadium center x coordinate
-		 * @param y stadium center y coordinate
-		 * @param r stadium radius
-		 */
 		public Stadium(int x, int y, int r) {
 			this.x = x;
 			this.y = y;
@@ -47,13 +36,6 @@ public final class Commentators {
 		}
 	}
 
-	/**
-	 * Reads the stadium location definition from the scanner and stores it into the
-	 * class instance.
-	 *
-	 * @param scanner the text input source
-	 * @return the stadium object instance
-	 */
 	private static Stadium readStadium(Scanner scanner) {
 		int x = scanner.nextInt();
 		int y = scanner.nextInt();
@@ -61,11 +43,6 @@ public final class Commentators {
 		return new Stadium(x, y, r);
 	}
 
-	/**
-	 * Runs the solution.
-	 *
-	 * @param args command-line arguments (unused)
-	 */
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.ROOT);
 		var scanner = new Scanner(System.in, StandardCharsets.US_ASCII);
@@ -78,25 +55,10 @@ public final class Commentators {
 		});
 	}
 
-	/**
-	 * A point on a Cartesian plane.
-	 */
 	private static class Point {
-		/**
-		 * X coodinate.
-		 */
 		public final double x;
-		/**
-		 * Y coordinate.
-		 */
 		public final double y;
 
-		/**
-		 * Creates a point instance.
-		 *
-		 * @param x the x coordinate
-		 * @param y the y coordinate
-		 */
 		public Point(double x, double y) {
 			this.x = x;
 			this.y = y;
@@ -157,18 +119,16 @@ public final class Commentators {
 		// quadratic case
 		var D = sqr(b).subtract(a.multiply(c));
 
-		if (D.signum() < 0) {
+		if (D.signum() < 0)
 			return Optional.empty();
-		}
 
 		double num = b.doubleValue() + b.signum() * sqrt(D.doubleValue());
 		double delta1 = num / a.doubleValue();
 		double delta2 = c.doubleValue() / num;
 		double d2 = delta1;
 
-		if (delta1 < 0 || delta2 > 0 && delta2 < delta1) {
+		if (delta1 < 0 || delta2 > 0 && delta2 < delta1)
 			d2 = delta2;
-		}
 
 		if (d2 > 0) {
 			double P = p.doubleValue() / Pi.doubleValue();
@@ -181,41 +141,18 @@ public final class Commentators {
 		return Optional.empty();
 	}
 
-	/**
-	 * Square of a big integer.
-	 * @param x a big integer
-	 * @return its square
-	 */
 	private static BigInteger sqr(BigInteger x) {
 		return x.multiply(x);
 	}
 
-	/**
-	 * A shortcut for BigInteger.valueOf.
-	 *
-	 * @param x an integer
-	 * @return its BigInteger counterpart
-	 */
 	private static BigInteger big(int x) {
 		return BigInteger.valueOf(x);
 	}
 
-	/**
-	 * Big product of integers.
-	 * @param x one integer
-	 * @param y another integer
-	 * @return their product as a BigInteger
-	 */
 	private static BigInteger times(int x, int y) {
 		return BigInteger.valueOf(x).multiply(BigInteger.valueOf(y));
 	}
 
-	/**
-	 * Big product of integers.
-	 * @param x one integer
-	 * @param y another BigInteger
-	 * @return their product
-	 */
 	private static BigInteger times(int x, BigInteger y) {
 		return BigInteger.valueOf(x).multiply(y);
 	}

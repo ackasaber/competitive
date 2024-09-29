@@ -1,30 +1,22 @@
 package codeforces.beta02;
 
-/* Task 2A. Winner */
+// A. Winner
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-/**
- * The task solution.
- */
+import static java.nio.charset.StandardCharsets.US_ASCII;
+
 public final class Winner {
 
-	/**
-	 * Reads the score history, finds the winner and writes its name.
-	 *
-	 * @param args commmand line arguments (unused)
-	 */
 	public static void main(String[] args) {
-		var reader = new InputStreamReader(System.in, StandardCharsets.US_ASCII);
+		var reader = new InputStreamReader(System.in, US_ASCII);
 		var bufferedReader = new BufferedReader(reader);
-		@SuppressWarnings("resource")
 		var scanner = new Scanner(bufferedReader);
 
 		// Read the score change history.
@@ -71,9 +63,6 @@ public final class Winner {
 		});
 	}
 
-	/**
-	 * A map entry with information about the running scores.
-	 */
 	private static final class PlayerEntry {
 		/**
 		 * The final score, computed on the first run through the score history.
@@ -86,25 +75,10 @@ public final class Winner {
 		public int currentScore;
 	}
 
-	/**
-	 * A record about score change.
-	 */
 	private static final class ScoreRecord {
-		/**
-		 * The player name.
-		 */
 		public String playerName;
-		/**
-		 * The change of the score after a single game move.
-		 */
 		public int scoreChange;
 
-		/**
-		 * Creates the record about one game move.
-		 *
-		 * @param playerName  player name
-		 * @param scoreChange score change
-		 */
 		public ScoreRecord(String playerName, int scoreChange) {
 			this.playerName = playerName;
 			this.scoreChange = scoreChange;

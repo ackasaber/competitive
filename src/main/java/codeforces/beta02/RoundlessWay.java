@@ -1,112 +1,55 @@
 package codeforces.beta02;
 
+// B. The least round way
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-
-/* Task 2B. The least round way */
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static java.nio.charset.StandardCharsets.US_ASCII;
+
 /**
- * The task solution.
- *
- * The solution is based on dynamic programming over 2- and 5-factorizations.
+ * The solution based on dynamic programming over 2- and 5-factorizations.
+ * 
+ * <p>Note that while it's not emphasized in the task description, but it's considered that the
+ * number zero ends in precisely one zero digit.</p>
  */
 public final class RoundlessWay {
-	/**
-	 * Runs the solution.
-	 *
-	 * @param args command-line arguments (unused)
-	 */
-	public static void main(String[] args) {
-		var reader = new InputStreamReader(System.in, StandardCharsets.US_ASCII);
+
+    public static void main(String[] args) {
+		var reader = new InputStreamReader(System.in, US_ASCII);
 		var bufferedReader = new BufferedReader(reader);
 		var scanner = new Scanner(bufferedReader);
-		var table = Table.read(scanner);
+		var table = readTable(scanner);
 		// Solve for powers of 2 and 5 and pick the smallest.
 		// The smallest solution will have the same or larger power of the other number.
 		Solution solution2 = new Solution(table, 2);
 		Solution solution5 = new Solution(table, 5);
 		Solution solution = solution2;
 
-		if (solution5.power() < solution2.power()) {
+		if (solution5.power() < solution2.power())
 			solution = solution5;
-		}
 
 		solution.reportResults();
 	}
 
-	/**
-	 * A square table of integer numbers.
-	 */
-	private static final class Table {
-		/**
-		 * Table size.
-		 */
-		private int n;
-		/**
-		 * Table data.
-		 */
-		private int[][] data;
+    public static int[][] readTable(Scanner scanner) {
+        int n = scanner.nextInt();
+        var table = new int[n][n];
 
-		/**
-		 * Creates a nxn-table filled with zeroes.
-		 *
-		 * @param n table size
-		 */
-		private Table(int n) {
-			this.n = n;
-			this.data = new int[n][n];
-		}
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j)
+                table[i][j] = scanner.nextInt();
+        }
 
-		/**
-		 * Returns the cell contents.
-		 *
-		 * @param i row number
-		 * @param j column number
-		 * @return the cell contents
-		 */
-		public int get(int i, int j) {
-			return data[i][j];
-		}
+        return table;
+    }
 
-		/**
-		 * Returns the table size.
-		 *
-		 * @return table size
-		 */
-		public int size() {
-			return n;
-		}
-
-		/**
-		 * Reads the table from a scanner.
-		 */
-		public static Table read(Scanner scanner) {
-			int n = scanner.nextInt();
-			var table = new Table(n);
-
-			for (int i = 0; i < n; ++i) {
-				for (int j = 0; j < n; ++j) {
-					table.data[i][j] = scanner.nextInt();
-				}
-			}
-
-			return table;
-		}
-
-	}
-
-	/**
+    /**
 	 * A solution for a prime factor.
 	 */
 	private static final class Solution {
-		/**
-		 * The tables size.
-		 */
-		private int n;
 		/**
 		 * The table for dynamic programming: each cell contains the minimum power of
 		 * the prime factor in the product of cell values across the path starting in
@@ -125,7 +68,10 @@ public final class RoundlessWay {
 		private static final int STICKY_ONE = -1;
 
 		/**
-		 * Combines the prime factor powers along the path. The zeroes across path give the power of "sticky one".
+		 * Combines the prime factor powers along the path.
+         * 
+         * <p>The zeroes across path give the power of "sticky one".</p>
+         * 
 		 * @param x one prime factor power
 		 * @param y another prime factor power
 		 * @return the combined power
@@ -140,6 +86,7 @@ public final class RoundlessWay {
 
 		/**
 		 * Compares prime factor powers, taking the "sticky one" power into account.
+         *
 		 * @param x one prime factor power
 		 * @param y another prime factor power
 		 * @return comparison result
@@ -151,6 +98,7 @@ public final class RoundlessWay {
 
 		/**
 		 * The prime factor power, with the "sticky one" converted to one.
+         *
 		 * @param u prime factor power
 		 * @return "unstickied" power
 		 */
@@ -168,21 +116,20 @@ public final class RoundlessWay {
 		 * @param table  source data
 		 * @param factor prime factor
 		 */
-		public Solution(Table table, int factor) {
-			n = table.size();
+		public Solution(int[][] table, int factor) {
+			int n = table.length;
 			minPower = new int[n][n];
 			previous = new Direction[n][n];
 
 			var powers = new int[n][n];
 			for (int i = 0; i < n; ++i) {
 				for (int j = 0; j < n; ++j) {
-					int value = table.get(i, j);
+					int value = table[i][j];
 
-					if (value == 0) {
+					if (value == 0)
 						powers[i][j] = STICKY_ONE;
-					} else {
-						powers[i][j] = countPowers(table.get(i, j), factor);
-					}
+					else
+						powers[i][j] = countPowers(table[i][j], factor);
 				}
 			}
 
@@ -217,6 +164,7 @@ public final class RoundlessWay {
 		 * @return prime factor power
 		 */
 		public int power() {
+            int n = minPower.length;
 			return unstick(minPower[n - 1][n - 1]);
 		}
 
@@ -226,6 +174,7 @@ public final class RoundlessWay {
 		 */
 		public void reportResults() {
 			// Start from the final cell: the bottom right corner.
+            int n = minPower.length;
 			int i = n - 1;
 			int j = n - 1;
 			System.out.println(power());
@@ -235,11 +184,10 @@ public final class RoundlessWay {
 			while (d != Direction.START) {
 				directions.add(d);
 
-				if (d == Direction.LEFT) {
+				if (d == Direction.LEFT)
 					j--;
-				} else {
+				else
 					i--;
-				}
 
 				d = previous[i][j];
 			}
@@ -248,11 +196,10 @@ public final class RoundlessWay {
 			for (int k = directions.size() - 1; k >= 0; --k) {
 				var direction = directions.get(k);
 
-				if (direction == Direction.LEFT) {
+				if (direction == Direction.LEFT)
 					System.out.print('R');
-				} else {
+				else
 					System.out.print('D');
-				}
 			}
 
 			System.out.println();
@@ -262,7 +209,7 @@ public final class RoundlessWay {
 	/**
 	 * Computes the power of the given number in the factorization of the input.
 	 *
-	 * @param n      input number
+	 * @param n      input number, non-zero
 	 * @param factor factor
 	 * @return the power <i>k</i> such that <i>n</i> divides
 	 *         factor<sup><i>k</i></sup> but doesn't divide factor<sup><i>k</i> +
@@ -279,22 +226,5 @@ public final class RoundlessWay {
 		return power;
 	}
 
-	/**
-	 * Direction of the previous cell in the path.
-	 */
-	private enum Direction {
-		/**
-		 * This is the starting cell.
-		 */
-		START,
-		/**
-		 * The previous cell in the path is on the top.
-		 */
-		TOP,
-		/**
-		 * The previous cell in the path is on the left.
-		 */
-		LEFT
-	};
-
+	private enum Direction { START, TOP, LEFT };
 }
