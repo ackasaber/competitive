@@ -52,10 +52,6 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
                     <release>21</release>
-                    <excludes>
-                        <!-- TODO rewrite this in JavaFx-->
-                        <exclude>codeforces/beta02/commentators/**</exclude>
-                    </excludes>
                 </configuration>
             </plugin>
 
