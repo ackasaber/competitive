@@ -53,8 +53,8 @@ public class BracketSequence {
 
         for (int i = 0; i < s.length(); i++) {
             switch (s.charAt(i)) {
-                case '(': openBrackets.push(i); break;
-                case ')':
+                case '(' -> openBrackets.push(i);
+                case ')' -> {
                     if (!openBrackets.isEmpty()) {
                         int lastOpen = openBrackets.pop();
                         int currentSegment = i - lastOpen + 1;
@@ -63,9 +63,8 @@ public class BracketSequence {
                         longestRegularSuffix[i + 1] = length;
                         answer.update(length);
                     }
-                    break;
-                default:
-                    throw new IllegalArgumentException("not a bracket sequence");
+                }
+                default -> throw new IllegalArgumentException("not a bracket sequence");
             }
         }
 

@@ -1,6 +1,6 @@
 package codeforces.beta03;
 
-/* Task 3D. Least cost bracket sequence */
+// D. Least cost bracket sequence
 
 import static java.nio.charset.StandardCharsets.US_ASCII;
 
@@ -54,12 +54,6 @@ import java.util.Scanner;
  */
 public class Brackets {
 
-	/**
-	 * Reads the pattern and costs from the standard input,
-	 * writes the minimal cost and the corresponding solution to the standard output.
-	 * 
-	 * @param args command line arguments (unused)
-	 */
 	public static void main(String[] args) {
 		var bufferedReader = new BufferedReader(new InputStreamReader(System.in, US_ASCII));
 		var scanner = new Scanner(bufferedReader);
@@ -72,25 +66,12 @@ public class Brackets {
 		writer.flush();
 	}
 
-	/**
-	 * Task data.
-	 */
 	private static class Task {
-		/**
-		 * The input pattern.
-		 */
 		String pattern;
 	
-		/**
-		 * Costs of unset positions.
-		 */
+		// Costs of unset positions.
 		ArrayList<UnsetPosition> unsetPositions;
 		
-		/**
-		 * Reads the task inputs from a scanner.
-		 * 
-		 * @param scanner the source of data
-		 */
 		public Task(Scanner scanner) {
 			pattern = scanner.nextLine();
 			int n = pattern.length();
@@ -109,11 +90,6 @@ public class Brackets {
 			}
 		}
 		
-		/**
-		 * Computes the optimal solution.
-		 * 
-		 * @return the solution
-		 */
 		public Solution solve() {
 			var buffer = new StringBuilder(pattern);
 			var minUnset = new PriorityQueue<UnsetPosition>();
@@ -166,53 +142,34 @@ public class Brackets {
 		}
 	}
 	
-	/**
-	 * Unset position info.
-	 */
+	// Unset position info.
 	private static class UnsetPosition implements Comparable<UnsetPosition> {
-		/**
-		 * The pattern character index.
-		 */
+		// The pattern character index.
 		int index;
 		
-		/**
-		 * Cost of placing an opening bracket at this index.
-		 */
+		// Cost of placing an opening bracket at this index.
 		int openCost;
 		
-		/**
-		 * Cost of placing a closing bracket at this index.
-		 */
+		// Cost of placing a closing bracket at this index.
 		int closeCost;
 		
-		/**
-		 * Compares unset positions based on the cost of changing
-		 * the closing bracket with an opening bracket.
-		 */
+		// Compares unset positions based on the cost of changing
+		// the closing bracket with an opening bracket.
 		@Override
 		public int compareTo(UnsetPosition pos) {
 			return Integer.compare(openCost - closeCost, pos.openCost - pos.closeCost);
 		}
 	}
 
-	/**
-	 * The task solution.
-	 */
 	private static class Solution {
 		String brackets;
 		long minCost;
 		
-		/**
-		 * Writes the solution to the writer in the required format.
-		 * 
-		 * @param writer the target writer
-		 */
 		public void write(PrintWriter writer) {
 			writer.println(minCost);
 			
-			if (minCost != -1) {
+			if (minCost != -1)
 				writer.println(brackets);
-			}
 		}
 	}
 }

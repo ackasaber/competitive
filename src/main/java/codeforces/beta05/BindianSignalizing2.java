@@ -4,7 +4,7 @@ import util.AsciiScanner;
 
 import java.util.ArrayDeque;
 
-/**
+/*
  * This actually does the same as the first solution, but the traversed sequence is stored in
  * one stack and one queue. The downward running part is in the stack, the upward running is in the
  * queue. Since we don't know from where the one-before-last hill group will come, stack or queue,

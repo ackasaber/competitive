@@ -1,28 +1,19 @@
 package codeforces.beta03;
 
-/* Task 3A. The shortest king's path. */
+// A. The shortest king's path
 
 import java.util.Scanner;
 import java.util.regex.Pattern;
-import static java.lang.System.out;
 
-import java.nio.charset.StandardCharsets;
-
+import static java.nio.charset.StandardCharsets.US_ASCII;
 import static java.lang.Integer.max;
+import static java.lang.Math.abs;
+import static java.lang.System.out;
  
-/**
- * The task solution.
- */
 public class KingsPath {
  
-	/**
-	 * Reads the board positions and outputs the shortest king's path from one to
-	 * the other.
-	 *
-	 * @param args command line arguments (unused)
-	 */
 	public static void main(String[] args) {
-		var scanner = new Scanner(System.in, StandardCharsets.US_ASCII);
+		var scanner = new Scanner(System.in, US_ASCII);
 		var s = ChessPosition.next(scanner);
 		var t = ChessPosition.next(scanner);
  
@@ -54,47 +45,23 @@ public class KingsPath {
 			out.println();
 		}
 	}
- 
-	/**
-	 * Absolute value of the integer number.
-	 *
-	 * @param x an integer
-	 * @return its absolute value
-	 */
-	private static int abs(int x) {
-		return x >= 0 ? x : -x;
-	}
+    
+    private static class ChessPosition {
+        // Chess board column, a-h.
+        char column;
+        // Chess board row, 1-8.
+        char row;
+
+        // Pattern matcher for reading the chess piece position.
+        static final Pattern PATTERN = Pattern.compile("[a-h][1-8]");
+
+        public static ChessPosition next(Scanner scanner) {
+            var token = scanner.next(PATTERN);
+            var pos = new ChessPosition();
+            pos.column = token.charAt(0);
+            pos.row = token.charAt(1);
+            return pos;
+        }
+    }
 }
  
-/**
- * A position of a chess piece on the board.
- */
-class ChessPosition {
-	/**
-	 * Chess board column, a letter a-h.
-	 */
-	public char column;
-	/**
-	 * Chess board row, a number 1-8.
-	 */
-	public char row;
- 
-	/**
-	 * Pattern matcher for reading the chess piece position.
-	 */
-	private static final Pattern PATTERN = Pattern.compile("[a-h][1-8]");
- 
-	/**
-	 * Reads the chess piece position in the standard chess notation.
-	 *
-	 * @param scanner the scanner to read the position from
-	 * @return the read chess piece position
-	 */
-	public static ChessPosition next(Scanner scanner) {
-		var token = scanner.next(PATTERN);
-		var pos = new ChessPosition();
-		pos.column = token.charAt(0);
-		pos.row = token.charAt(1);
-		return pos;
-	}
-}

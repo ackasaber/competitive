@@ -44,16 +44,14 @@ public final class AsciiScanner {
     public int nextInt() {
         skipSpace();
 
-        if (end == -1) {
+        if (end == -1)
             throw new InputMismatchException("expected an unsigned number, got eof");
-        }
 
         byte c = buffer[start];
         int x = 0;
 
-        if (c < ZERO || c > NINE) {
+        if (c < ZERO || c > NINE)
             throw new InputMismatchException("expected an unsigned number");
-        }
 
         while (end != -1 && ZERO <= buffer[start] && buffer[start] <= NINE) {
             x = x * 10 + (buffer[start] - ZERO);

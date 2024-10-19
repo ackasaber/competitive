@@ -82,11 +82,10 @@ public final class Circus {
 		// Now a >= b.
 		double mu;
 
-		if (b >= c) {
+		if (b >= c)
 			mu = c - (a - b);
-		} else {
+		else
 			mu = b - (a - c);
-		}
 
 		// parentheses are important
         return 2 * Math.atan(Math.sqrt(((a - b) + c) * mu / ((a + (b + c)) * ((a - c) + b))));

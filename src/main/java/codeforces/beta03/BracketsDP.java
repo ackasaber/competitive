@@ -1,6 +1,6 @@
 package codeforces.beta03;
 
-/* Task 3D. Least cost bracket sequence */
+// D. Least cost bracket sequence
 
 import static java.nio.charset.StandardCharsets.US_ASCII;
 
@@ -33,12 +33,6 @@ import java.util.Scanner;
  */
 public class BracketsDP {
 
-	/**
-	 * Reads the pattern and costs from the standard input,
-	 * writes the minimal cost and the corresponding solution to the standard output.
-	 * 
-	 * @param args command line arguments (unused)
-	 */
 	public static void main(String[] args) {
 		var bufferedReader = new BufferedReader(new InputStreamReader(System.in, US_ASCII));
 		var scanner = new Scanner(bufferedReader);
@@ -51,46 +45,23 @@ public class BracketsDP {
 		writer.flush();
 	}
 
-	/**
-	 * Task data.
-	 */
 	private static class Task {
-		/**
-		 * The input pattern.
-		 */
+		// The input pattern.
 		String pattern;
 		
-		/**
-		 * The input pattern length.
-		 */
+		// The input pattern length.
 		int n;
 		
-		/**
-		 * Opening bracket costs at the given index.
-		 * 
-		 * <p>&minus;1 if the opening bracket is forbidden.</p>
-		 */
+		// Opening bracket costs at the given index, -1 if the opening bracket is forbidden.
 		int[] openCost;
 		
-		/**
-		 * Closing bracket costs. 
-		 * 
-		 * <p>&minus;1 if the closing bracket is forbidden.</p>
-		 */
+		// Closing bracket costs, -1 if the closing bracket is forbidden.
 		int[] closeCost;
 		
-		/**
-		 * The minimal cost of placing certain number of brackets at the given index.
-		 * 
-		 * <p>&minus;1 if it's impossible to place brackets in this range.</p>
-		 */
+		// The minimal cost of placing certain number of brackets at the given index,
+		// -1 if it's impossible to place brackets in this range.
 		int[][] minCost;
 		
-		/**
-		 * Reads the task inputs from a scanner.
-		 * 
-		 * @param scanner the source of data
-		 */
 		public Task(Scanner scanner) {
 			pattern = scanner.nextLine();
 			n = pattern.length();
@@ -98,37 +69,33 @@ public class BracketsDP {
 			closeCost = new int[n];
 			
 			for (int i = 0; i < n; ++i) {
-				char c = pattern.charAt(i);
-				
-				if (c == '?') {
-					openCost[i] = scanner.nextInt();
-					closeCost[i] = scanner.nextInt();
-				} else if (c == '(') {
-					openCost[i] = 0;
-					closeCost[i] = -1;
-				} else if (c == ')') {
-					openCost[i] = -1;
-					closeCost[i] = 0;
-				}
+                switch (pattern.charAt(i)) {
+                    case '?' -> {
+                        openCost[i] = scanner.nextInt();
+                        closeCost[i] = scanner.nextInt();
+                    }
+                    case '(' -> {
+                        openCost[i] = 0;
+                        closeCost[i] = -1;
+                    }
+                    case ')' -> {
+                        openCost[i] = -1;
+                        closeCost[i] = 0;
+                    }
+                }
 			}
 		}
 		
-		/**
-		 * Returns the optimal solution.
-		 * 
-		 * @return the solution
-		 */
 		public Solution solve() {
-			if (n > 1000) {
+			if (n > 1000)
 				throw new UnsupportedOperationException("this will take too long to compute");
-			}
 
 			minCost = new int[n / 2 + 1][];
 			minCost[0] = new int[n + 1];
 			
-			for (int i = 0; i <= n; ++i) {
-				minCost[0][i] = 0;
-			}
+            // Java fill with zeroes by default.
+            // for (int i = 0; i <= n; ++i)
+            //     minCost[0][i] = 0;
 			
 			for (int m = 1; m <= n / 2; ++m) {
 				minCost[m] = new int[n - 2 * m + 1];
@@ -138,9 +105,8 @@ public class BracketsDP {
 					for (int k = 1; k < m; ++k) {
 						int other = add(minCost[k][i], minCost[m - k][i + 2 * k]);
 						
-						if (cost == -1 || other != -1 && other < cost) {
+						if (cost == -1 || other != -1 && other < cost)
 							cost = other;
-						}
 					}
 
 					minCost[m][i] = cost;
@@ -151,27 +117,14 @@ public class BracketsDP {
 		}
 	}
 	
-	/**
-	 * The task solution reconstructor.
-	 */
 	private static class Solution {
 		StringBuilder brackets;
 		Task task;
 		
-		/**
-		 * Initializes the solution for the computed task data.
-		 * 
-		 * @param task the task data
-		 */
 		public Solution(Task task) {
 			this.task = task;
 		}
 
-		/**
-		 * Writes the solution in the required format.
-		 * 
-		 * @param writer the output
-		 */
 		public void write(PrintWriter writer) {
 			var cost = task.minCost[task.n / 2][0];
 			writer.println(cost);
@@ -211,34 +164,13 @@ public class BracketsDP {
 		}
 	}
 	
-	/**
-	 * Adds numbers considering &minus;1 to be an infinity.
-	 * 
-	 * @param x summand 1
-	 * @param y summand 2
-	 * @param z summand 3
-	 * @return the sum
-	 */
+	// Add numbers considering -1 to be an infinity.
+    
 	private static int add(int x, int y, int z) {
-		if (x == -1 || y == -1 || z == -1) {
-			return -1;
-		}
-		
-		return x + y + z;
+		return (x == -1 || y == -1 || z == -1) ? - 1 : x + y + z;
 	}
 	
-	/**
-	 * Adds numbers considering &minus;1 to be an infinity.
-	 * 
-	 * @param x summand 1
-	 * @param y summand 2
-	 * @return the sum
-	 */
 	private static int add(int x, int y) {
-		if (x == -1 || y == -1) {
-			return -1;
-		}
-		
-		return x + y;
+		return (x == -1 || y == -1) ? -1 : x + y;
 	}
 }

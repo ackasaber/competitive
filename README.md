@@ -22,3 +22,10 @@ The solutions were written for JDK 21.
 
 There is supplementary code for task investigation. It's placed in a sub-package next to the
 corresponding task solution.
+
+## TODO
+
+- Restructure each competition into a separate POM.
+- Restructure the code and add task examples as unit tests.
+- Move all involved explanations into TeX.
+- Need a more reasonable solution for a certain math-heavy task.
