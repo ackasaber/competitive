@@ -1,0 +1,7 @@
+"""
+Solution for the [Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/description/)
+LeetCode problem.
+"""
+
+bazel_dep(name = "abseil-cpp", version = "20240722.0")
+bazel_dep(name = "googletest", version = "1.15.2")
