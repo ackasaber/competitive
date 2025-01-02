@@ -5,7 +5,7 @@
 
 using absl::Span;
 
-int trap_rainwater(Span<const int> heights) {
+int TrapRainwater(Span<const int> heights) {
   int n = heights.size();
   int max_left = 0;
   int max_right = 0;
