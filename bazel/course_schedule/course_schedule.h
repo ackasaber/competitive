@@ -1,10 +1,7 @@
 #pragma once
 
 #include <vector>
-
-struct Prerequisite {
-  int course;
-  int prereq;
-};
+#include "prerequisite.h"
 
 bool CanFinish(int courseCount, const std::vector<Prerequisite>& prerequisites);
+std::vector<int> Schedule(int courseCount, const std::vector<Prerequisite>& prerequisites);

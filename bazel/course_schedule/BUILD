@@ -1,7 +1,7 @@
 cc_library(
   name = "course_schedule",
-  srcs = ["course_schedule.cc", "graph.cc"],
-  hdrs = ["course_schedule.h", "graph.h"],
+  srcs = ["course_schedule.cc", "course_schedule2.cc"],
+  hdrs = ["prerequisite.h", "course_schedule.h", "course_graph.h"],
 )
 
 cc_test(
