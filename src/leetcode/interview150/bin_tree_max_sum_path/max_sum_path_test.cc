@@ -2,7 +2,7 @@
 
 #include <gtest/gtest.h>
 
-class MaxSumPathTest: public testing::Test {
+class MaxSumPathTest : public testing::Test {
   std::unique_ptr<TreeNode[]> storage_;
   static constexpr size_t capacity_ = 52;
   size_t size_;
@@ -26,8 +26,7 @@ TEST_F(MaxSumPathTest, MyTests) {
 }
 
 MaxSumPathTest::MaxSumPathTest()
-    : size_(0),
-      storage_(std::make_unique<TreeNode[]>(capacity_)) {}
+    : storage_(std::make_unique<TreeNode[]>(capacity_)), size_(0) {}
 
 TreeNode* MaxSumPathTest::n(int val, TreeNode* left, TreeNode* right) {
   if (size_ == capacity_) {

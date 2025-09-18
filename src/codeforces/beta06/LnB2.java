@@ -11,17 +11,12 @@ import java.util.Scanner;
 
 import static java.nio.charset.StandardCharsets.US_ASCII;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * A dynamic programming solution with 3 parameters: number of archers, hits on the last archer
  * and hits on the one after it.
  */
 
 public class LnB2 {
-    private static final Logger logger = LoggerFactory.getLogger(LnB2.class);
-    
     public static void main(String[] args) {
         var reader = new InputStreamReader(System.in, US_ASCII);
         var scanner = new Scanner(new BufferedReader(reader));
@@ -63,7 +58,6 @@ public class LnB2 {
 
         for (int i = 1; i <= n-2; i++) {
             limits[i-1] = 1 + max(hp[i-1]/b, hp[i]/a, hp[i+1]/b);
-            logger.debug("limits[{}] = {}", i, limits[i-1]);
         }
 
         // Let the minumum number of casts to have first 2<=j<=n-2 archers dead while having cast
@@ -80,11 +74,6 @@ public class LnB2 {
                 minCasts[0][m][k] = (b*m <= hp[0] || a*m + b*k <= hp[1]) ? IMPOSSIBLE : m+k;
         }
         
-        if (logger.isDebugEnabled()) {
-            logger.debug("Archers 1-2 options:");
-            printTable(minCasts[0]);
-        }
-
         for (int j = 3; j <= n-2; j++) {
             // Looking for first j archers dead.
             // Trying various combinations of casts at archers j-2, j-1 and j.
@@ -122,11 +111,6 @@ public class LnB2 {
                     minChoice[j-2][m][k] = minI;
                 }
             }
-            
-            if (logger.isDebugEnabled()) {
-                logger.debug("Archers {}-{} options:", j-1, j);
-                printTable(minCasts[j-2]);
-            }
         }
 
         // Find the best suitable solution overall in the minCasts[n-4].
@@ -135,7 +119,6 @@ public class LnB2 {
         int bestM = 0;
         int limI = limits[n-4];
         int limM = limits[n-3];
-        logger.debug("reconstructing solution");
 
         for (int i = 0; i <= limI; ++i) {
             for (int m = 0; m <= limM; ++m) {
@@ -143,21 +126,17 @@ public class LnB2 {
                     minSol = minCasts[n-4][i][m];
                     bestI = i;
                     bestM = m;
-                    logger.debug("better: {}, {}", i, m);
                 }
             }
         }
 
         // Reconstruct the solution using the back references from minChoice.
         casts.total = minSol;
-        logger.debug("casts on {}: {}", n-2, bestM);
         casts.casts[n-3] = bestM;
-        logger.debug("casts on {}: {}", n-3, bestI);
         casts.casts[n-4] = bestI;
 
         for (int j = n-2; j > 2; j--) {
             int newBestI = minChoice[j-2][bestI][bestM];
-            logger.debug("casts on {}: {}", j-2, newBestI);
             casts.casts[j-3] = newBestI;
             bestM = bestI;
             bestI = newBestI;
@@ -168,35 +147,5 @@ public class LnB2 {
     
     private static int max(int a, int b, int c) {
         return Math.max(Math.max(a, b), c);
-    }
-    
-    private static void printTable(int[][] f) {
-        int q = f.length - 1;
-        int r = f[0].length - 1;
-
-        var line = new StringBuilder();
-        
-        for (int k = 0; k <= r; k++) {
-            line.append('\t');
-            line.append(k);
-        }
-        
-        logger.debug("{}", line);
-        
-        for (int h = 0; h <= q; h++) {
-            line.setLength(0);
-            line.append(h);
-            
-            for (int k = 0; k <= r; k++) {
-                line.append('\t');
-                
-                if (f[h][k] == IMPOSSIBLE)
-                    line.append("∞");
-                else
-                    line.append(f[h][k]);
-            }
-            
-            logger.debug("{}", line);
-        }
     }
 }

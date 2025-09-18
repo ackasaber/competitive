@@ -8,12 +8,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.Scanner;
-import java.util.Arrays;
 
 import static java.nio.charset.StandardCharsets.US_ASCII;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A simple backtracking solution.
@@ -32,8 +28,6 @@ public class LnB {
         printer.flush();
     }
 
-    private static final Logger logger = LoggerFactory.getLogger(LnB.class);
-    
     private final int a, b;
     private final int[] hp;
     private final CastSet current, best;
@@ -53,9 +47,6 @@ public class LnB {
     }
 
     private void searchBestCasts(int k) {
-        logger.atDebug().setMessage("searchBestCasts {} {}")
-                .addArgument(k).addArgument(() -> Arrays.toString(hp)).log();
-        
         if (current.total >= best.total)
             return;
 
@@ -67,11 +58,9 @@ public class LnB {
                     killingBarrage(k, a),
                     killingBarrage(k+1, b)
             );
-            logger.debug("last position hits = {}", lastHits);
 
             if (current.total + lastHits < best.total) {
                 fire(k, lastHits);
-                logger.debug("better solution with {} hits", current.total);
                 best.copyFrom(current);
                 fire(k, -lastHits);
             }
@@ -80,7 +69,6 @@ public class LnB {
 
         int minHits = killingBarrage(k-1, b);
         int maxHits = killingBarrage(k, a);
-        logger.debug("minHits = {} to maxHits = {}", minHits, maxHits);
         fire(k, minHits);
         searchBestCasts(k+1);
 

@@ -12,8 +12,8 @@ private:
   std::array<size_t, letterCount> freq_;
 };
 
-absl::string_view MinContainingSubstring(absl::string_view s, absl::string_view t) {
-  absl::string_view answer = s.substr(0, 0);
+std::string_view MinContainingSubstring(std::string_view s, std::string_view t) {
+  std::string_view answer = s.substr(0, 0);
   FrequencyTable needleFreq;
 
   for (char c: t)

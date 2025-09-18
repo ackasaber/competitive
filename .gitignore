@@ -1,2 +1,5 @@
 /target
 **/*.tuc
+bazel-*/
+bazel-*
+MODULE.bazel.lock

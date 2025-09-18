@@ -1,8 +1,7 @@
 cc_library(
   name = "min_window_size",
   srcs = ["min_window_size.cc"],
-  hdrs = ["min_window_size.h"],
-  deps = ["@abseil-cpp//absl/strings:string_view"],
+  hdrs = ["min_window_size.h"]
 )
 
 
