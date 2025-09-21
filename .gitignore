@@ -3,3 +3,5 @@
 bazel-*/
 bazel-*
 MODULE.bazel.lock
+.clwb/
+.vscode/
