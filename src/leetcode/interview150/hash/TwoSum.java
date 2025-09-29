@@ -1,6 +1,6 @@
 package leetcode.hash;
 
-/* Task 1. Two Sum */
+// Task 1. Two Sum
 
 import static java.nio.charset.StandardCharsets.US_ASCII;
 
@@ -9,21 +9,11 @@ import java.io.InputStreamReader;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
-/**
- * The task solution.
- * 
- * <p>A simple solution with a hash table. A more elaborate solution would
- * sort the array and use binary search to locate the second element of the
- * pair.</p>
- */
+// A simple solution with a hash table. A more elaborate solution would
+// sort the array and use binary search to locate the second element of the
+// pair.
 public class TwoSum {
 
-	/**
-	 * Reads the array and the sum from the standard input and writes
-	 * the indices of two elements that have that sum to the standard output. 
-	 * 
-	 * @param args command line arguments (unused)
-	 */
 	public static void main(String[] args) {
 		var reader = new InputStreamReader(System.in, US_ASCII);
 		var bufferedReader = new BufferedReader(reader);
@@ -48,13 +38,8 @@ public class TwoSum {
 		return array;
 	}
 	
-	/**
-	 * Finds the two array elements with the given sum.
-	 * 
-	 * @param nums the input array
-	 * @param sum the desired sum
-	 * @return a pair of array indices that point to the necessary elements
-	 */
+	// Find the two array elements with the given sum.
+	// Return a pair of array indices that point to the necessary elements.
 	public static int[] twoSum(int[] nums, int sum) {
 		int n= nums.length;
 		var table = new HashTable(2 * n);
@@ -74,10 +59,8 @@ public class TwoSum {
 		return null;
 	}
 	
-	/**
-	 * A hash table implementation: universal hashing and chaining for
-	 * collision resolution.
-	 */
+	// A hash table implementation: universal hashing and chaining for
+	// collision resolution.
 	private static final class HashTable {
 		// Should be prime and greater than the number of possible keys.
 		private static final int PRIME = 2000000011;
@@ -90,11 +73,6 @@ public class TwoSum {
 			Entry next;
 		}
 		
-		/**
-		 * Constructs an empty hash table.
-		 * 
-		 * @param capacity the hash table capacity
-		 */
 		public HashTable(int capacity) {
 			table = new Entry[capacity];
 			var random = ThreadLocalRandom.current();
@@ -102,13 +80,6 @@ public class TwoSum {
 			b = random.nextInt(PRIME);
 		}
 		
-		/**
-		 * Inserts a new key with the given value into the hash table
-		 * or, if it's an existing key, changes the corresponding value.
-		 * 
-		 * @param key the hash table key
-		 * @param value the associated value
-		 */
 		public void put(int key, int value) {
 			int h = hash(key);
 			var entry = find(table[h], key);
@@ -123,12 +94,6 @@ public class TwoSum {
 			entry.value = value;
 		}
 		
-		/**
-		 * Searches for the key in the hash table.
-		 * 
-		 * @param key the searched key
-		 * @return the associated value or -1 if the key is not found
-		 */
 		public int find(int key) {
 			int h = hash(key);
 			var entry = find(table[h], key);
