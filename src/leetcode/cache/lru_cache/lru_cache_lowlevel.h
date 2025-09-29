@@ -2,16 +2,16 @@
 
 #include <memory>
 
-class LruCache {
+class LruCacheLowLevel {
 public:
-  explicit LruCache(int capacity);
+  explicit LruCacheLowLevel(int capacity);
   int Get(int key); // -1 if not found
   void Put(int key, int value);
 
-  LruCache(int capacity, int a, int b);
-  ~LruCache();
-  LruCache(const LruCache&) = delete;
-  LruCache& operator=(const LruCache&) = delete;
+  LruCacheLowLevel(int capacity, int a, int b);
+  ~LruCacheLowLevel();
+  LruCacheLowLevel(const LruCacheLowLevel&) = delete;
+  LruCacheLowLevel& operator=(const LruCacheLowLevel&) = delete;
 
 private:
   struct Entry {

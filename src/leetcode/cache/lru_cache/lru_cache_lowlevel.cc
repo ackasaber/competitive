@@ -1,9 +1,8 @@
-#include "lru_cache.h"
-
 #include <random>
-#include <iostream>
 
-LruCache::LruCache(int capacity, int a, int b)
+#include "lru_cache_lowlevel.h"
+
+LruCacheLowLevel::LruCacheLowLevel(int capacity, int a, int b)
   : capacity_(capacity)
   , size_(0)
   , a_(a)
@@ -14,8 +13,8 @@ LruCache::LruCache(int capacity, int a, int b)
 {
 }
 
-LruCache::LruCache(int capacity)
-  : LruCache(capacity, 0, 0)
+LruCacheLowLevel::LruCacheLowLevel(int capacity)
+  : LruCacheLowLevel(capacity, 0, 0)
 {
   std::random_device device;
   std::mt19937 rng(device());
@@ -25,7 +24,7 @@ LruCache::LruCache(int capacity)
   b_ = bDist(rng);
 }
 
-LruCache::~LruCache() {
+LruCacheLowLevel::~LruCacheLowLevel() {
   Entry* entry = lastUsed_;
 
   while (entry != nullptr) {
@@ -35,9 +34,8 @@ LruCache::~LruCache() {
   }
 }
 
-void LruCache::Put(int key, int value) {
+void LruCacheLowLevel::Put(int key, int value) {
   int hash = Hash(key);
-  std::cout << "PUT " << key << " (hash " << hash << ") " << value << std::endl;
   Entry* entry = Find(table_[hash], key);
 
   if (entry == nullptr) {
@@ -58,9 +56,8 @@ void LruCache::Put(int key, int value) {
   }
 }
 
-int LruCache::Get(int key) {
+int LruCacheLowLevel::Get(int key) {
   int hash = Hash(key);
-  std::cout << "GET " << key << " (hash " << hash << ")" << std::endl;
   Entry* entry = Find(table_[hash], key);
 
   if (entry == nullptr)
@@ -70,18 +67,16 @@ int LruCache::Get(int key) {
   return entry->value;
 }
 
-LruCache::Entry* LruCache::Find(Entry* bucket, int key) {
+LruCacheLowLevel::Entry* LruCacheLowLevel::Find(Entry* bucket, int key) {
   Entry* entry = bucket;
 
-  while (entry != nullptr && entry->key != key) {
-    std::cout << "Searching in entry with key = " << entry->key << std::endl;
+  while (entry != nullptr && entry->key != key)
     entry = entry->bucketNext;
-  }
 
   return entry;
 }
 
-int LruCache::Hash(int key) const {
+int LruCacheLowLevel::Hash(int key) const {
   int hash = (a_ * key + b_) % prime;
 
   if (hash < 0)
@@ -90,7 +85,7 @@ int LruCache::Hash(int key) const {
   return hash % capacity_;
 }
 
-LruCache::Entry* LruCache::InsertIntoBucket(Entry* bucket, Entry* entry) {
+LruCacheLowLevel::Entry* LruCacheLowLevel::InsertIntoBucket(Entry* bucket, Entry* entry) {
   entry->bucketNext = bucket;
 
   if (bucket != nullptr)
@@ -100,7 +95,7 @@ LruCache::Entry* LruCache::InsertIntoBucket(Entry* bucket, Entry* entry) {
   return entry;
 }
 
-void LruCache::InsertIntoLru(Entry* entry) {
+void LruCacheLowLevel::InsertIntoLru(Entry* entry) {
   entry->usedAfter = lastUsed_;
 
   if (lastUsed_ != nullptr)
@@ -112,9 +107,7 @@ void LruCache::InsertIntoLru(Entry* entry) {
   lastUsed_ = entry;
 }
 
-void LruCache::Use(Entry* entry) {
-  std::cout << "USE " << entry->key << std::endl;
-
+void LruCacheLowLevel::Use(Entry* entry) {
   if (entry == lastUsed_)
     return;
 
@@ -134,20 +127,18 @@ void LruCache::Use(Entry* entry) {
   entry->usedBefore = nullptr;
 }
 
-void LruCache::EvictLru() {
-  std::cout << "EVICT" << std::endl;
+void LruCacheLowLevel::EvictLru() {
   Entry* toDelete = leastRecentlyUsed_;
 
   if (toDelete == nullptr)
     return;
 
-  std::cout << "Evicting " << toDelete->key << std::endl;
   RemoveFromBucket(toDelete);
   RemoveLru();
   delete toDelete;
 }
 
-void LruCache::RemoveFromBucket(Entry* entry) {
+void LruCacheLowLevel::RemoveFromBucket(Entry* entry) {
   Entry* next = entry->bucketNext;
   Entry* prev = entry->bucketPrev;
 
@@ -162,7 +153,7 @@ void LruCache::RemoveFromBucket(Entry* entry) {
   }
 }
 
-void LruCache::RemoveLru() {
+void LruCacheLowLevel::RemoveLru() {
   Entry* lru = leastRecentlyUsed_;
   Entry* newLru = lru->usedBefore;
   leastRecentlyUsed_ = newLru;
