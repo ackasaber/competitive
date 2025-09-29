@@ -4,8 +4,14 @@
 
 cc_library(
     name = "lru_cache",
-    srcs = ["lru_cache_lowlevel.cc"],
-    hdrs = ["lru_cache_lowlevel.h"],
+    srcs = [
+        "lru_cache_highlevel.cc",
+        "lru_cache_lowlevel.cc",
+    ],
+    hdrs = [
+        "lru_cache_highlevel.h",
+        "lru_cache_lowlevel.h",
+    ],
 )
 
 cc_test(
